@@ -1,0 +1,31 @@
+#include <iostream>
+using namespace std;
+
+// Move todos os números com valor 1 para o início do array
+void moverumprafrente(int arr[], int size){
+    int position = 0;
+
+// Troca o número atual com o número da posição
+    for (int i = 0; i < size; ++i){
+        if (arr[i] == 1) {
+            int temp = arr[position];
+            arr[position] = arr[i];
+            arr[i] = temp;
+            position++;
+        }
+    }
+}
+
+int main(){
+    int arr[] = {2, 1, 5, 2, 5, 2, 1, 1, 1, 7, 9, 13, 127, 21};
+    int size = 14;
+    
+    // Move os números 1 para o início do array
+    moverumprafrente(arr, size);
+    cout << "Após a reordenação o Array ficou desse jeito: \n";
+    for (int i = 0; i < size; ++i){
+        cout << arr[i] << ",";
+    }
+
+    return 0;
+}

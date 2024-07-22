@@ -1,0 +1,69 @@
+#include <iostream>
+using namespace std;
+
+// Verifica se existe um par com a soma X
+bool parsomax(int arr[], int size, int X){
+    
+    // Maior e menor número no array
+    int max_num = arr[0];
+    int min_num = arr[0];
+    for(int i = 1; i < size; ++i){
+        if(arr[i] > max_num){
+            max_num = arr[i];
+        }
+        if(arr[i] < min_num){
+            min_num = arr[i];
+        }
+    }
+
+    int range = max_num - min_num + 1;
+    bool complements[range];
+
+    // Inicializa o array com false
+    for(int i = 0; i < range; ++i){
+        complements[i] = false;
+    }
+
+    // Verifica se existe um par com a soma X
+    for(int i = 0; i < size; ++i){
+        int complement = X - arr[i];
+        if(complement >= min_num && complement <= max_num && complements[complement - min_num]){
+            return true;
+        }
+        complements[arr[i] - min_num] = true;
+    }
+    
+    return false;
+}
+
+int main(){
+    int arr[] = {1, 15, 2, 7, 2, 5, 7, 1, 4};
+    int size = sizeof(arr) / sizeof(arr[0]);
+    char opcao;
+    
+    do{
+        int X;
+        cout << "Digite o valor de X: ";
+        cin >> X;
+
+bool resultado = parsomax(arr, size, X);
+        cout << (resultado ? "A função é True" : "A função é False") << "\n";
+
+        if(resultado){
+            cout << "Existe uma combinação de dois números no array que somam " << X << ".\n";
+        } else {
+            cout << "Não existe uma combinação de dois números no array que somam " << X << ".\n";
+        }
+
+        cout << "\nDeseja continuar (S/N)? ";
+        cin >> opcao;
+
+        while(opcao != 'S' && opcao != 's' && opcao != 'N' && opcao != 'n'){
+            cout << "Opção inválida. Digite S para continuar ou N para sair: ";
+            cin >> opcao;
+        }
+
+    } while(opcao == 'S' || opcao == 's');
+    
+    return 0;
+}

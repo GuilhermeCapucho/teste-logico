@@ -1,0 +1,58 @@
+#include <iostream>
+using namespace std;
+
+// Encontra o maior número dentro do array
+void completararray(int arr[], int& size){
+    int max_num = arr[0];
+    for (int i = 1; i < size; ++i){
+        if (arr[i] > max_num){
+            max_num = arr[i];
+        }
+    }
+
+    // Marca os números presentes no array
+    int numarray[max_num + 1];
+
+    for (int i = 0; i <= max_num; ++i){
+        numarray[i] = 0;
+    }
+
+    // Números presentes no array
+    for (int i = 0; i < size; ++i){
+        numarray[arr[i]] = 1;
+    }
+
+    // Adiciona os números que faltam no array
+    for (int i = 0; i <= max_num; ++i){
+        if (numarray[i] == 0) {
+            arr[size++] = i;
+        }
+    }
+
+    // Ordena o array em ordem crescente
+    for (int i = 0; i < size - 1; ++i){
+        for (int j = 0; j < size - i - 1; ++j){
+            if (arr[j] > arr[j + 1]){
+                int temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
+            }
+        }
+    }
+}
+
+
+int main(){
+    int arr[20] = {9, 2, 3, 1, 4};
+    int size = 5;
+
+    completararray(arr, size);
+
+    cout << "O Array completo ficou desse jeito: \n";
+    for (int i = 0; i < size; ++i){
+        cout << arr[i] << ",";
+    }
+    cout << "\n";
+
+    return 0;
+}

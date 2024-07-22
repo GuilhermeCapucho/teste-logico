@@ -1,0 +1,87 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+// Nó da árvore binária
+struct TreeNode{
+    string val;
+    TreeNode* left;
+    TreeNode* right;
+    TreeNode(string x) : val(x), left(NULL), right(NULL){}
+};
+
+// Busca a palavra-chave
+bool search(TreeNode* root, const string& key, string& path){
+    if (!root) 
+        return false;
+    
+    // Adiciona o valor do nó atual ao caminho
+    string currentPath = path;
+    if (!path.empty()) 
+        path += " -> ";
+    path += root->val;
+    
+    // O nó que contém a palavra-chave retorna como verdadeiro
+    if (root->val == key) 
+        return true;
+    
+    // Busca na árvore esquerda ou direita
+    if (search(root->left, key, path) || search(root->right, key, path)) 
+        return true;
+
+    // Restaura o caminho original se a busca falhar
+    path = currentPath;
+    return false;
+}
+
+// Busca a palavra-chave e retorna o caminho
+string encontrarcaminho(TreeNode* root, const string& key){
+    string path;
+    if (search(root, key, path)){
+        return path;
+    }
+    return "Palavra-chave não encontrada";
+}
+
+// Inicializa a árvore binária
+TreeNode* initializeTree(){
+    TreeNode* root = new TreeNode("Maçã");
+    root->left = new TreeNode("Morango");
+    root->right = new TreeNode("Pera");
+    root->left->left = new TreeNode("Goiaba");
+    root->left->right = new TreeNode("Limão");
+    root->right->right = new TreeNode("Abacaxi");
+    root->right->right->right = new TreeNode("Laranja");
+    root->right->right->right->left = new TreeNode("Banana");
+    root->right->right->right->right = new TreeNode("Cebola");
+    return root;
+}
+
+int main() {
+    TreeNode* root = initializeTree();
+    char opcao;
+    
+    do{
+    
+    cout << "Temos uma Árvore Binária de palavras com as seguintes frutas: \n";
+    cout << "Árvore: Maçã, Morango, Pera, Goiaba, Limão, Abacaxi, Laranja, Banana e Cebola. \n";
+
+    string palavrachave;
+    cout << "\nSelecione uma das frutas para ver qual o caminho é percorrido: ";
+    cin >> palavrachave;
+
+    string caminho = encontrarcaminho(root, palavrachave);
+    cout << "Caminho para " << palavrachave << ": " << caminho << "\n";
+    
+    cout << "\nDeseja continuar (S/N)? ";
+        cin >> opcao;
+
+        while(opcao != 'S' && opcao != 's' && opcao != 'N' && opcao != 'n'){
+            cout << "Opção inválida. Digite S para continuar ou N para sair: ";
+            cin >> opcao;
+        }
+
+    } while(opcao == 'S' || opcao == 's');
+
+    return 0;
+}
